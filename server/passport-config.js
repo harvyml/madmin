@@ -39,6 +39,7 @@ passport.use('local-signup', new LocalStrategy({
     const user = await User.findOne({email: email})
     const password_state = password_validation(password, req.body.password_validation)
     if(!password_state.okay){
+        alert(password_state.err.message)
         return done(null, false, password_state.err)
     }
 

@@ -34,14 +34,15 @@ mongoose.connect(process.env.DB, {
 
 
 app.get("/", (req, res) => {
-    !req.query.err ? res.send("Hola, tu estado es: " + req.flash("success")) : res.send("Hola, tu estado es: " + req.flash("error").reduce((acc, el) => acc+el))
+    // !req.query.err ? res.send("Hola, tu estado es: " + req.flash("success")) : res.send("Hola, tu estado es: " + req.flash("error").reduce((acc, el) => acc+el))
+    res.send("Something")
 })
 
 app.get("/err", (req, res) => {
     res.send(req.flash("error"))
 })
 
-app.get("/login", passport.authenticate("local-signin", {
+app.post("/login", passport.authenticate("local-signin", {
     successRedirect: "/api/",
     successMessage: "Welcome!",
     successFlash: false,
@@ -55,7 +56,7 @@ app.post("/register", passport.authenticate("local-signup", {
 	failureFlash: true
 }))
 
-app.post("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
     req.logout()
     res.redirect("/login")
 })
