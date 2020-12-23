@@ -1,0 +1,13 @@
+.title{
+    font-size: 1.6rem;
+}
+.center{
+    text-align: center;
+    margin: auto;
+}
+.margined-top{
+    margin-top: 20px;
+}
+.paddinged{
+    padding: 20px;
+}

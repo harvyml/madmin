@@ -1,0 +1,49 @@
+{
+  "name": "madmin",
+  "version": "1.0.0",
+  "description": "Admin system for technical test purposes",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon ./server/index.js & webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harvyml/madmin.git"
+  },
+  "author": "Harvy Esteban Mosquera Leyton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harvyml/madmin/issues"
+  },
+  "homepage": "https://github.com/harvyml/madmin#readme",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.2",
+    "bcrypt": "^5.0.0",
+    "bootstrap": "^4.5.3",
+    "cloudinary": "^1.23.0",
+    "connect-flash": "^0.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.18",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.6",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-session": "^1.0.2",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "webpack": "^5.9.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "webpack-cli": "^4.2.0"
+  }
+}
