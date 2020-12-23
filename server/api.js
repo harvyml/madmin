@@ -37,9 +37,14 @@ app.get("/", (req, res) => {
     !req.query.err ? res.send("Hola, tu estado es: " + req.flash("success")) : res.send("Hola, tu estado es: " + req.flash("error").reduce((acc, el) => acc+el))
 })
 
+app.get("/err", (req, res) => {
+    res.send(req.flash("error"))
+})
+
 app.get("/login", passport.authenticate("local-signin", {
     successRedirect: "/api/",
-    successFlash: true,
+    successMessage: "Welcome!",
+    successFlash: false,
 	failureRedirect: "/api?err=true",
 	failureFlash: true
 }))

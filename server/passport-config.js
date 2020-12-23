@@ -3,6 +3,7 @@ var flash = require('connect-flash');
 const LocalStrategy = require("passport-local").Strategy
 const User = require("./models/user.js");
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
 
 const {password_validation} = require("./methods")
 
@@ -39,7 +40,9 @@ passport.use('local-signup', new LocalStrategy({
     const password_state = password_validation(password, req.body.password_validation)
     if(!password_state.okay){
         return done(null, false, password_state.err)
-    }else if(user){
+    }
+
+    if(user){
         return done(null, false, {message: "user already exists"})
     }
 
@@ -52,7 +55,7 @@ passport.use('local-signup', new LocalStrategy({
         password: hashedPassword
     })
     new_user.save().then(user => {
-        return done(null, user, {message: "registered successfully"})
+        return done(null, user)
     }).catch(err => {
         return done(err, false, {message: err.message})
     })
