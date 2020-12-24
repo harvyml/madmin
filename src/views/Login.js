@@ -39,6 +39,7 @@ const App = () => {
         e.preventDefault()
         axios.post("/api/login", user).then(snap => {
             console.log(snap)
+            snap.data.name ? window.location.href = "/panel" : null
         }).catch(err => console.log("Error: ", err))
     }
 

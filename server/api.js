@@ -46,7 +46,7 @@ app.get("/err", (req, res) => {
 })
 
 app.post("/login", passport.authenticate("local-signin", {
-    successRedirect: "/panel",
+    successRedirect: "/api/user",
     successMessage: "Welcome!",
     successFlash: false,
 	failureRedirect: "/api?err=true",
@@ -54,7 +54,7 @@ app.post("/login", passport.authenticate("local-signin", {
 }))
 
 app.post("/register", passport.authenticate("local-signup", {
-    successRedirect: "/api",
+    successRedirect: "/api/user",
 	failureRedirect: "/api/err",
 	failureFlash: true
 }))

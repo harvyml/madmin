@@ -19,8 +19,8 @@ passport.use('local-signin', new LocalStrategy({
     usernameField: 'user',
     passwordField: 'password',
     passReqToCallback: true
-}, async (req, email, password, done) => {
-    const user = await User.findOne({email: email})
+}, async (req, username, password, done) => {
+    const user = await User.findOne({user: username})
     if(!user){
         return done(null, false)
     }
@@ -35,8 +35,8 @@ passport.use('local-signup', new LocalStrategy({
     usernameField: 'user',
     passwordField: 'password',
     passReqToCallback: true
-}, async (req, email, password, done) => {
-    const user = await User.findOne({email: email})
+}, async (req, username, password, done) => {
+    const user = await User.findOne({email: username})
     const password_state = password_validation(password, req.body.password_validation)
     if(!password_state.okay){
         alert(password_state.err.message)
@@ -52,7 +52,7 @@ passport.use('local-signup', new LocalStrategy({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         lastname: req.body.lastname,
-        user: email,
+        user: username,
         password: hashedPassword
     })
     new_user.save().then(user => {

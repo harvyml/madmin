@@ -25,7 +25,10 @@ const App = () => {
                 user,
                 password,
                 password_validation
-            }).then(snap => console.log("done: ",snap))
+            }).then(snap => {
+                console.log("done: ",snap)
+                snap.data.name ? window.location.href = "/panel" : null
+            })
             .catch(err => console.log("error: ", err))
         }else{
             alert(validation.err.message)
