@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import axios from "axios"
 //bootstrap
 import {Container, Row, Col, Button, Form} from "react-bootstrap"
-import {password_validate} from "./components/methods"
+import {password_validate} from "./components/utils/methods"
 
 
 
@@ -54,7 +54,9 @@ const App = () => {
         let validation = password_validate(user.password, user.password_validation)
         if(validation.okay){
             window.location.redirect = "/something"
-            return 
+            axios.post("/api/login", {
+                ...user
+            })
         }else{
             alert(validation.err.message)
         }
