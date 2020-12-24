@@ -37,13 +37,14 @@ const Users = () => {
 
 
 const User = ({user}) => {
+    const Img = ({src}) => <img src={src}/>
     return (
         <tr>
             <td>{user.nombres}</td>
             <td>{user.apellidos}</td>
             <td>{user.telefono}</td>
             <td>{user.email}</td>
-            <td>{user.estado}</td>
+            <td>{user.estado ? <Img src="./public/assets/check_green.png"/> : <Img src="./public/assets/cancel_x.png"/>}</td>
         </tr>
     )
 }
