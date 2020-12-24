@@ -2,7 +2,8 @@ module.exports = {
 	mode: "development",
 	entry: {
 		register_bundle: './src/hydrated/Register.js',
-		login_bundle: './src/hydrated/Login.js'
+		login_bundle: './src/hydrated/Login.js',
+		panel_bundle: './src/hydrated/Panel.js'
 	},
 	module: {
 		rules: [//These are the loaders

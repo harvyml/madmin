@@ -9,54 +9,24 @@ import {password_validate} from "./components/utils/methods"
 
 
 const App = () => {
-    const [user, setUser] = useState({
-        user: null,
-        password: null,
-        password_validation: null
-    })
-    const [passwordState, setPasswordState] = useState(false)
-    
-    function changeUserName(e){
-        setUser(current => {
-            console.log(current, e.target.value)
-            return {
-                user: e.target.value,
-                password: current.password,
-                password_validation: current.password_validation
-            }
-        })
-    }
-
-    function changePassword(e){
-        setUser(current => {
-            console.log(current, e.target.value)
-            return {
-                user: current.user,
-                password: e.target.value,
-                password_validation: current.password_validation
-            }
-        })
-    }
-
-    function changePasswordValidation(e){
-        setUser(current => {
-            console.log(current, e.target.value)
-            return {
-                user: current.user,
-                password: current.password,
-                password_validation: e.target.value
-            }
-        })
-    }
+    const [name, setName] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [user, setUser] = useState("")
+    const [password, setPassword] = useState("")
+    const [password_validation, setPasswordValidation] = useState("")
 
     function validateAndSendDataToServer(e){
         e.preventDefault()
-        let validation = password_validate(user.password, user.password_validation)
+        let validation = password_validate(password, password_validation)
         if(validation.okay){
-            window.location.redirect = "/something"
-            axios.post("/api/login", {
-                ...user
-            })
+            axios.post("/api/register", {
+                name,
+                lastname,
+                user,
+                password,
+                password_validation
+            }).then(snap => console.log("done: ",snap))
+            .catch(err => console.log("error: ", err))
         }else{
             alert(validation.err.message)
         }
@@ -70,10 +40,12 @@ const App = () => {
                         <Form onSubmit={validateAndSendDataToServer}>
                             <Form.Text className="title center paddinged">Registro</Form.Text>
                             <Form.Group>
-                                <Form.Control placeholder="Email" id="email" onChange={changeUserName}/>
+                                <Form.Control placeholder="Nombre" id="name" onChange={(e) => setName(e.target.value)}/>
+                                <Form.Control placeholder="Apellido" id="lastname" onChange={(e) => setLastname(e.target.value)}/>
+                                <Form.Control placeholder="Email" id="email" onChange={(e) => setUser(e.target.value)}/>
                             </Form.Group>
-                                <Form.Control placeholder="Contraseña" id="password" onChange={changePassword}/>
-                                <Form.Control placeholder="Repetir Contraseña" id="password" onChange={changePasswordValidation}/>
+                                <Form.Control placeholder="Contraseña" id="password" onChange={(e) => setPassword(e.target.value)}/>
+                                <Form.Control placeholder="Repetir Contraseña" id="password" onChange={(e) => setPasswordValidation(e.target.value)}/>
                                 <Form.Control placeholder="Escoger Foto de Perfil" id="profile-photo"/>
                                 <Form.Text className="text-muted">Something really cool</Form.Text>
                                 <Button type="submit"variant="dark" className="margined-top" id="submit">Send</Button>

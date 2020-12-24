@@ -16,7 +16,7 @@ passport.deserializeUser(async (id, done) => {
 })
 
 passport.use('local-signin', new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'user',
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
@@ -32,7 +32,7 @@ passport.use('local-signin', new LocalStrategy({
 
 
 passport.use('local-signup', new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'user',
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
@@ -58,6 +58,7 @@ passport.use('local-signup', new LocalStrategy({
     new_user.save().then(user => {
         return done(null, user)
     }).catch(err => {
+        console.log(err)
         return done(err, false, {message: err.message})
     })
 }

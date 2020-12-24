@@ -38,12 +38,15 @@ app.get("/", (req, res) => {
     res.send("Something")
 })
 
+app.get("/user", (req, res) => {
+    res.json(req.user)
+})
 app.get("/err", (req, res) => {
     res.send(req.flash("error"))
 })
 
 app.post("/login", passport.authenticate("local-signin", {
-    successRedirect: "/api/",
+    successRedirect: "/panel",
     successMessage: "Welcome!",
     successFlash: false,
 	failureRedirect: "/api?err=true",
