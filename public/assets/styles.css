@@ -4,6 +4,9 @@
 }
 
 /*General Styling*/
+:root{
+    --font_main: #DDE2FF;
+}
 .row{
     margin: 0;
 }.container-fluid{
@@ -63,10 +66,29 @@
 /*Panel Styling*/
 .sidebar{
     width: 100%;
+    background-color: #363740;
+    color: var(--font_main);
+    height: 100vh;
 }
 .sidebar .company-info{
     width: 100%;
+    background-color: #47495B;
+}
+.sidebar .company-info .company-name .title{
+    font-size: 1.2rem;
 }
 .card.company-info-card{
     width: 100%;
+    border-radius: 0;
+    background-color: transparent;
+}
+.inline-navbar .card{
+    background-color: transparent;
+}
+.inline-navbar .card .list-group-flush .list-group-item{
+    border-radius: 0;
+    border-width: 0 0 0px;
+    background: transparent;
+    padding-top: 1.3rem;
+    padding-bottom: 1.3rem;
 }

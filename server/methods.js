@@ -21,6 +21,17 @@ function password_validation(password, password_validation){
 }
 
 
+
+function orderbyname(arr){
+    var ordered = arr.sort(function(a, b){
+        if (a.name > b.name) {
+            return 1;
+        }
+        if (a.name < b.name) {
+            return -1;
+        }
+    })
+}
 module.exports = {
     password_validation
 }

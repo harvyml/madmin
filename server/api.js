@@ -8,7 +8,8 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const Place = require("./models/user");
 const passport = require("passport");
-const initializePassport = require("./passport-config").default
+const initializePassport = require("./passport-config").default;
+const { default: axios } = require("axios");
 const app = express()
 
 app.use("/public", express.static("/public/assets"))
@@ -62,6 +63,12 @@ app.post("/register", passport.authenticate("local-signup", {
 app.get("/logout", (req, res) => {
     req.logout()
     res.redirect("/login")
+})
+
+app.get("/getusers", (req, res) => {
+    axios.get("https://api.mocki.io/v1/c6b2887f").then(snap => {
+        res.json(snap.data)
+    }).catch(err => res.json(err))
 })
 
 module.exports = app
