@@ -8,8 +8,10 @@ import useUser from "./components/useUser"
 import Sidebar from "./components/Sidebar"
 import Board from "./components/Board"
 import {BoardContext} from "./components/BoardContext"
-import users from "./Users"
+import Users from "./Users"
 
+
+const CustomContent = () => <h1>Holo</h1>
 const Panel = () => {
     const user = useUser()
     const [active, setActive] = useState(0)
@@ -30,8 +32,8 @@ const Panel = () => {
 
 const TabHandler = ({active, user}) => {
     if(active == 0) return <Board boardname="A name" user={user} customContent={CustomContent}/> 
-    if(active == 1) return <Board boardname="A name" user={user} customContent={CustomContent}/> 
-    if(active == 2) return <Board boardname="A name" user={user} customContent={CustomContent}/> 
+    if(active == 1) return <Board boardname="Usuarios" user={user} customContent={Users}/> 
+    if(active == 2) return <Board boardname="t name" user={user} customContent={CustomContent}/> 
     return null
 }
 

@@ -9,8 +9,9 @@ const bodyParser = require("body-parser")
 const Place = require("./models/user");
 const passport = require("passport");
 const initializePassport = require("./passport-config").default;
-const { default: axios } = require("axios");
+const axios = require("axios");
 const app = express()
+const {order_by_name} = require("./methods") 
 
 app.use("/public", express.static("/public/assets"))
 app.use(bodyParser.json())
@@ -65,10 +66,23 @@ app.get("/logout", (req, res) => {
     res.redirect("/login")
 })
 
+
 app.get("/getusers", (req, res) => {
     axios.get("https://api.mocki.io/v1/c6b2887f").then(snap => {
-        res.json(snap.data)
+        res.json(
+            snap.data
+        )
     }).catch(err => res.json(err))
 })
+
+app.get("/orderedusers", (req, res) => {
+    axios.get("https://api.mocki.io/v1/c6b2887f").then(snap => {
+        res.json(
+            order_by_name(snap.data)
+        )
+    }).catch(err => res.json(err))
+})
+
+
 
 module.exports = app
