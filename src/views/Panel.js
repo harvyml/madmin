@@ -10,9 +10,8 @@ import Board from "./components/Board"
 import {BoardContext} from "./components/BoardContext"
 import Users from "./Users"
 import Tasks from "./Tasks"
+import HomeBoard from "./HomeBoard"
 
-
-const CustomContent = () => <h1>Holo</h1>
 const Panel = () => {
     const user = useUser()
     const [active, setActive] = useState(0)
@@ -39,12 +38,10 @@ const Panel = () => {
 
 
 const TabHandler = ({active, user}) => {
-    if(active == 0) return <Board boardname="A name" user={user} customContent={CustomContent}/> 
+    if(active == 0) return <Board boardname="Home" user={user} customContent={HomeBoard}/> 
     if(active == 1) return <Board boardname="Usuarios" user={user} customContent={Users}/> 
-    if(active == 2) return <Board boardname="Tasks" user={user} customContent={Tasks}/> 
+    if(active == 2) return <Board boardname="Tareas" user={user} customContent={Tasks}/> 
     return null
 }
-
-
 
 export default Panel;

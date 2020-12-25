@@ -16,17 +16,17 @@ const Board = ({user, customContent, boardname}) => {
                     <Col sm={8}>
                         <Nav className="justify-content-end" activeKey="/home">
                             <Nav.Item>
-                            <Nav.Link href="/home">Active</Nav.Link>
+                            <Nav.Link href="/home"></Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                            <Nav.Link eventKey="link-1">Link</Nav.Link>
+                            <Nav.Link eventKey="disabled"><i className="material-icons">search</i></Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                            <Nav.Link eventKey="link-2">Link</Nav.Link>
+                            <Nav.Link eventKey="disabled"><i className="material-icons">notifications</i></Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                             <Nav.Link eventKey="disabled" disabled>
-                                {user.name}
+                                |{"  " + user.name}
                             </Nav.Link>
                             </Nav.Item>
                         </Nav>

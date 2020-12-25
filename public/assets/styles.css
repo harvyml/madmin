@@ -33,7 +33,9 @@
 .semi-bold{
     font-weight: bold;
 }
-
+i.material-icons{
+    vertical-align: middle;
+}
 .col-md-3, .col-md-9, .col-lg-3, .col-lg-9{
     margin: 0;
     padding-left: 0 !important;
@@ -59,7 +61,11 @@
 .paddinged-right{
     padding-right: 1rem;
 }
-
+.btn-float-right{
+    float: right;
+    width: 300px;
+    padding: .5rem;
+}
 
 
 
@@ -91,4 +97,20 @@
     background: transparent;
     padding-top: 1.3rem;
     padding-bottom: 1.3rem;
+}
+
+
+/*Task (TODO) Crud*/
+.task-crud{
+    width: 100%;
+}
+.task-crud ul{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0 0 0;
+    vertical-align: middle;
+}.task-crud ul li{
+    cursor: pointer;
 }

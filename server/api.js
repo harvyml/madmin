@@ -7,6 +7,8 @@ const {} = require("./modules")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 
+
+const Todo = require("./models/todo")
 const passport = require("passport");
 const initializePassport = require("./passport-config").default;
 const axios = require("axios");
@@ -16,7 +18,7 @@ const {
     create_todo,
     get_todos_from_user,
     remove_todo_from_user,
-    get_todo_from_user
+    get_todo
 } = require("./methods") 
 app.use("/public", express.static("/public/assets"))
 app.use(bodyParser.json())
@@ -35,7 +37,8 @@ app.use(flash())
 //db configuration
 mongoose.connect(process.env.DB, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 })
 
 
@@ -98,15 +101,13 @@ app.get("/todos", (req, res) => {
 })
 
 app.get("/todo", (req, res) => {
-    get_todo_from_user(req.user._id).then(todos => {
-        console.log(todos)
-        res.json(todos)
-    }).catch(err => {
-        res.json(err)
-    })
+    console.log("THE TODO: ", req.query._id)
+    Todo.findOne({_id: req.query._id}).then(snap => {
+        res.json(snap)
+    }).catch(err => res.json(err))
 })
 //sending data to database
-app.post("/createtodo", (req, res) => {
+app.post("/todo/create", (req, res) => {
     create_todo(req.body.text, req.user._id).then(snap => {
         res.json(snap)
     }).catch(err => {
@@ -116,12 +117,23 @@ app.post("/createtodo", (req, res) => {
 
 
 
-app.put("/edittodo", (req, res) => {
+app.post("/todo/edit", (req, res) => {
+    console.log(req.body._id)
+    let update = {
+        _id: req.body._id,
+        text: req.body.text
+    }
 
+    let result = Todo.findOneAndUpdate({_id: req.body._id}, update)
+    result.then(snap => {
+        res.json(snap)
+    }).catch(err => {
+        res.json(err)
+    })
 })
 
-app.post("/removetodo", (req, res) => {
-    console.log(req.body._id)
+app.post("/todo/remove", (req, res) => {
+    console.log("id to remove: ", req.body._id)
     remove_todo_from_user(req.body._id).then(snap => {
         console.log("deleted")
         res.json(snap)

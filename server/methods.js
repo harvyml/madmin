@@ -49,8 +49,8 @@ async function get_todos_from_user(userId){
     return result
 }
 
-async function get_todos_from_user(_id, userId){
-    var result = await Todo.find({userId, _id}).sort({_id: -1})
+async function get_todo(_id){
+    var result = await Todo.findOne({_id: _id})
     return result
 }
 
@@ -66,5 +66,6 @@ module.exports = {
     order_by_name,
     create_todo,
     get_todos_from_user,
-    remove_todo_from_user
+    remove_todo_from_user,
+    get_todo
 }
