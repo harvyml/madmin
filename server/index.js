@@ -22,7 +22,7 @@ app.use("/", router)
 router.use("/api", api)
 
 router.get("/", (req, res) => {
-    res.redirect("/panel")
+    !req.isAuthenticated() ? res.redirect("/login") : res.redirect("/panel")
 })
 router.get("/register", (req, res) => {
     res.send(register_html)
