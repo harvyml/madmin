@@ -4,7 +4,7 @@ import useFetch from "./components/hooks/useFetch"
 //bootstrap
 import useUser from "./components/useUser"
 import { BoardContext } from "./components/BoardContext"
-import { Card, ListGroup, Table, Modal, Button } from "react-bootstrap"
+import { Card, ListGroup, Table, Modal, Button, Form } from "react-bootstrap"
 import axios from "axios"
 
 const Tasks = () => {
@@ -53,6 +53,7 @@ const Task = ({ text, id }) => {
                 </div>
                 <div className="task-crud">
                     <ul>
+                        <li><img src="./public/assets/check_green.png"/></li>
                         <li><span class="material-icons" custom_action="edit" task_id={id}>create</span></li>{/* 'create' is just the icon for edit*/}
                         <li><span class="material-icons" custom_action="delete" task_id={id}>delete</span></li>
                     </ul>
@@ -103,12 +104,15 @@ const CreateModal = ({show, handleClose}) => {
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Create a todo!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <textarea>
-                    
-                </textarea>
+                <Form>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Write your todo here</Form.Label>
+                        <Form.Control as="textarea" rows={3} />
+                    </Form.Group>
+                </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
