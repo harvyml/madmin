@@ -16,6 +16,13 @@ const CustomContent = () => <h1>Holo</h1>
 const Panel = () => {
     const user = useUser()
     const [active, setActive] = useState(0)
+    useEffect(() => {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search)
+        var active_tab_from_url = params.get("tab") ? params.get("tab") : active
+
+        setActive(active_tab_from_url)
+    }, [])
     return (
         <div className="app">
             <Row>

@@ -9,20 +9,8 @@ import axios from "axios"
 
 const Tasks = () => {
     const user = useUser()
-    const users = useFetch("/api/orderedusers")
+    const todos = useFetch("/api/todos")
     const [createModal, setCreateModal] = useState(false)
-    const [editModal, setEditModal] = useState(false)
-    const [deleteModal, setDeleteModal] = useState(false)
-    const [currentSelectedTask, setCurrentSelectedTask] = useState("")
-    function handleTaskAction(e) {
-        console.log("add")
-        var id = e.target.getAttribute("task_id")
-        var action = e.target.getAttribute("")
-        console.log(action)
-        if (action == "create") {
-            setCreateModal(true)
-        }
-    }
     return (
         <>
             <div className="users-component">
@@ -36,15 +24,15 @@ const Tasks = () => {
                         </ListGroup>
                     </Card>
                 </div>
-                <EditModal show={editModal} />
-                <CreateModal show={createModal} handleClose={() => setCreateModal(false)}/>
+                <CreateModal show={createModal} handleClose={() => setCreateModal(false)} userId={user._id} />
+                <All_Tasks all_tasks={todos}/>
             </div>
         </>
     )
 }
 
 
-const Task = ({ text, id }) => {
+const Task = ({ text, _id }) => {
     return (
         <ListGroup.Item>
             <div className="task">
@@ -53,9 +41,9 @@ const Task = ({ text, id }) => {
                 </div>
                 <div className="task-crud">
                     <ul>
-                        <li><img src="./public/assets/check_green.png"/></li>
-                        <li><span class="material-icons" custom_action="edit" task_id={id}>create</span></li>{/* 'create' is just the icon for edit*/}
-                        <li><span class="material-icons" custom_action="delete" task_id={id}>delete</span></li>
+                        <li><img src="./public/assets/check_green.png" /></li>
+                        <li><span className="material-icons" myaction="edit" task_id={_id}>create</span></li>{/* 'create' is just the icon for edit*/}
+                        <li><span className="material-icons" myaction="delete" task_id={_id}>delete</span></li>
                     </ul>
                 </div>
             </div>
@@ -63,26 +51,54 @@ const Task = ({ text, id }) => {
     )
 }
 
-const All_Tasks = (all_tasks) => {
+
+const All_Tasks = ({all_tasks}) => {
+    const [editModal, setEditModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [taskId, setTaskId] = useState("")
+
+    function handleTaskAction(e) {
+        const task_id = e.target.getAttribute("task_id")
+        setTaskId(task_id)
+        const action = e.target.getAttribute("myaction")
+        console.log(action, task_id)
+        if(action == "edit"){
+            setEditModal(true)
+        }else if(action == "delete"){
+            setDeleteModal(true)
+        }
+    }
+
     return (
-        <div className="all-tasks" onClick={handleTaskAction}>
-            {
-                all_tasks.map((task, i) => (
-                    <Task {...task} key={i} />
-                ))
-            }
+        <div className="all-tasks-container">
+            <div className="all-tasks" onClick={handleTaskAction}>
+                {
+                    all_tasks.map((task, i) => (
+                        <Task {...task} key={i} />
+                    ))
+                }
+            </div>
+            <EditModal show={editModal} handleClose={() => setEditModal(false)} task_id={taskId}/>
+            <DeleteModal show={deleteModal} handleClose={() => setDeleteModal(false)} task_id={taskId}/>
         </div>
     )
 }
 
-const EditModal = ({ handleShow, handleClose, show }) => {
+const EditModal = ({handleClose, show }) => {
     return (
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Edit Modal</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Edit your todo</Form.Label>
+                            <Form.Control as="textarea" rows={3} onChange={updateText} defaultValue={defaultText}/>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
@@ -96,11 +112,38 @@ const EditModal = ({ handleShow, handleClose, show }) => {
     );
 }
 
-const DeleteModal = () => {
-
+const DeleteModal = ({show, handleClose, task_id}) => {
+    function delete_todo() {
+        remove_todo(task_id)
+    }
+    return (
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Delete a todo!</Modal.Title>
+            </Modal.Header>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                    </Button>
+                <Button variant="primary" onClick={delete_todo}>
+                    Save Changes
+                    </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
 
-const CreateModal = ({show, handleClose}) => {
+const CreateModal = ({ show, handleClose }) => {
+    const [text, setText] = useState("")
+
+    function updateText(e) {
+        console.log(e.currentTarget.value)
+        setText(e.currentTarget.value)
+    }
+
+    function submit_todo() {
+        add_todo(text)
+    }
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -110,7 +153,7 @@ const CreateModal = ({show, handleClose}) => {
                 <Form>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Write your todo here</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control as="textarea" rows={3} onChange={updateText} />
                     </Form.Group>
                 </Form>
             </Modal.Body>
@@ -118,7 +161,7 @@ const CreateModal = ({show, handleClose}) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                     </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={submit_todo}>
                     Save Changes
                     </Button>
             </Modal.Footer>
@@ -126,20 +169,26 @@ const CreateModal = ({show, handleClose}) => {
     )
 }
 
-function add_task(id) {
-    axios.post("/api/addtask", { id: id }).then(snap => {
+function add_todo(text) {
+    axios.post("/api/createtodo", { text }).then(snap => {
         console.log(snap.data)
+        window.location.href = "/panel?tab=2"
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+function remove_todo(_id) {
+    axios.post("/api/removetodo", {_id: _id}).then(snap => {
+        console.log(snap.data)
+        window.location.href = "/panel?tab=2"
+        return snap
     }).catch(err => console.log(err))
 }
 
-function remove_task(id) {
-    axios.post("/api/addtask", { id: id }).then(snap => {
-        console.log(snap.data)
-    }).catch(err => console.log(err))
-}
-
-function edit_task(id, text) {
-    axios.post("/api/addtask", { id, text }).then(snap => {
+function edit_todo(id, text) {
+    axios.post("/api/edittask", { id, text }).then(snap => {
+        window.location.href = "/panel?tab=2"
         console.log(snap.data)
     }).catch(err => console.log(err))
 }

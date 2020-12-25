@@ -6,17 +6,21 @@ const cors = require("cors")
 const {} = require("./modules")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
-const Place = require("./models/user");
+
 const passport = require("passport");
 const initializePassport = require("./passport-config").default;
 const axios = require("axios");
 const app = express()
-const {order_by_name} = require("./methods") 
-
+const {
+    order_by_name, 
+    create_todo,
+    get_todos_from_user,
+    remove_todo_from_user,
+    get_todo_from_user
+} = require("./methods") 
 app.use("/public", express.static("/public/assets"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-
 //session configuration
 app.use(session({ 
     secret: process.env.SECRET_WORD_FOR_SESSION_HANDLING, 
@@ -67,6 +71,7 @@ app.get("/logout", (req, res) => {
 })
 
 
+//database get actions
 app.get("/getusers", (req, res) => {
     axios.get("https://api.mocki.io/v1/c6b2887f").then(snap => {
         res.json(
@@ -83,6 +88,45 @@ app.get("/orderedusers", (req, res) => {
     }).catch(err => res.json(err))
 })
 
+app.get("/todos", (req, res) => {
+    get_todos_from_user(req.user._id).then(todos => {
+        console.log(todos)
+        res.json(todos)
+    }).catch(err => {
+        res.json(err)
+    })
+})
+
+app.get("/todo", (req, res) => {
+    get_todo_from_user(req.user._id).then(todos => {
+        console.log(todos)
+        res.json(todos)
+    }).catch(err => {
+        res.json(err)
+    })
+})
+//sending data to database
+app.post("/createtodo", (req, res) => {
+    create_todo(req.body.text, req.user._id).then(snap => {
+        res.json(snap)
+    }).catch(err => {
+        res.json(err)
+    })
+})
+
+
+
+app.put("/edittodo", (req, res) => {
+
+})
+
+app.post("/removetodo", (req, res) => {
+    console.log(req.body._id)
+    remove_todo_from_user(req.body._id).then(snap => {
+        console.log("deleted")
+        res.json(snap)
+    }).catch(err => res.json(err))
+})
 
 
 module.exports = app

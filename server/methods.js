@@ -1,5 +1,7 @@
 const passport = require("passport")
-
+const Todo = require("./models/todo")
+const mongoose = require("mongoose")
+const { findOneAndRemove } = require("./models/todo")
 /**
  * Compares and returns an error if:
  * 1. The password and password_validation don't match
@@ -21,14 +23,48 @@ function password_validation(password, password_validation){
 }
 
 
-
+/**
+ * orders an array by its field 'nombre', returns a promise
+ * @param {*} arr 
+ */
 function order_by_name(arr){
     var ordered = arr.sort((a, b) => a.nombres.localeCompare(b.nombres, 'es', { sensitivity: 'base' }))
     return ordered
 }
 
 
+function create_todo(text, userId){
+    var new_todo = new Todo({
+        _id: new mongoose.Types.ObjectId(),
+        userId,
+        text,
+        date: new Date().getTime()
+    })
+
+    return new_todo.save()
+}
+
+async function get_todos_from_user(userId){
+    var result = await Todo.find({userId: userId}).sort({_id: -1})
+    return result
+}
+
+async function get_todos_from_user(_id, userId){
+    var result = await Todo.find({userId, _id}).sort({_id: -1})
+    return result
+}
+
+
+async function remove_todo_from_user(_id){
+    console.log("removing todo")
+    var result = await Todo.findOneAndRemove({_id: _id})
+    return result
+}
+
 module.exports = {
     password_validation,
-    order_by_name
+    order_by_name,
+    create_todo,
+    get_todos_from_user,
+    remove_todo_from_user
 }
