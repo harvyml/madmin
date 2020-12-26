@@ -14,6 +14,12 @@ import HomeBoard from "./HomeBoard"
 
 const Panel = () => {
     const user = useUser()
+    //just added for now while the conditional session handling bug is corrected
+    useEffect(() => {
+        if(!user){
+            window.location.href = "/login"
+        }
+    }, [user])
     const [active, setActive] = useState(0)
     useEffect(() => {
         const url = new URL(window.location.href);

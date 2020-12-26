@@ -49,8 +49,7 @@ const App = () => {
                             </Form.Group>
                                 <Form.Control placeholder="Contraseña" id="password" onChange={(e) => setPassword(e.target.value)}/>
                                 <Form.Control placeholder="Repetir Contraseña" id="password" onChange={(e) => setPasswordValidation(e.target.value)}/>
-                                <Form.Control placeholder="Escoger Foto de Perfil" id="profile-photo"/>
-                                <Form.Text className="text-muted">Something really cool</Form.Text>
+                                <Form.Text className="text-muted"><a href="/login">¿Ya estás registrado?</a></Form.Text>
                                 <Button type="submit"variant="dark" className="margined-top" id="submit">Send</Button>
                             
                         </Form>

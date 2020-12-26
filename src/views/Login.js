@@ -4,11 +4,19 @@ import axios from "axios"
 //bootstrap
 import {Container, Row, Col, Button, Form} from "react-bootstrap"
 import {password_validate} from "./components/utils/methods"
+import useFetch from "./components/hooks/useFetch"
 
 
 
 
 const App = () => {
+    const userLogged = useFetch("/api/user")
+
+    useEffect(() => {
+        if(user.name){
+            window.location.href = "/panel"
+        }
+    }, [userLogged])
     const [user, setUser] = useState({
         user: null,
         password: null,
@@ -54,7 +62,7 @@ const App = () => {
                                 <Form.Control placeholder="Email" id="email" onChange={changeUserName}/>
                             </Form.Group>
                                 <Form.Control placeholder="Contraseña" id="password" onChange={changePassword}/>    
-                                <Form.Text className="text-muted">Something really cool</Form.Text>
+                                <Form.Text className=""><a href="/register">¿Aún no estás registrado?</a></Form.Text>
                                 <Button type="submit"variant="dark" className="margined-top" id="submit">Send</Button>
                             
                         </Form>

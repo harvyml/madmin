@@ -68,7 +68,9 @@ i.material-icons{
 }
 
 
-
+.inline-navbar .list-group-item{
+    cursor: pointer;
+}
 /*Panel Styling*/
 .sidebar{
     width: 100%;

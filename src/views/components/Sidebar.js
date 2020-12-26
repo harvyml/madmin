@@ -44,6 +44,7 @@ function List({active, setActive}){
             <ListGroup.Item boardkey={0}><img src="./public/assets/home.png" className="paddinged-right"/>Home</ListGroup.Item>
             <ListGroup.Item boardkey={1}><img src="./public/assets/people.png" className="paddinged-right"/>Usuarios</ListGroup.Item>
             <ListGroup.Item boardkey={2}><img src="./public/assets/doc.png" className="paddinged-right"/>Tareas</ListGroup.Item>
+            <ListGroup.Item><a href="/api/logout">Cerrar Sesión</a></ListGroup.Item>
         </ListGroup>
     )
 }
