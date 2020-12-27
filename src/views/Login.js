@@ -59,9 +59,9 @@ const App = () => {
                         <Form onSubmit={handleSignIn}>
                             <Form.Text className="title center paddinged">Login</Form.Text>
                             <Form.Group>
-                                <Form.Control placeholder="Email" id="email" onChange={changeUserName}/>
+                                <Form.Control placeholder="Email" id="email" type="email" onChange={changeUserName}/>
                             </Form.Group>
-                                <Form.Control placeholder="Contraseña" id="password" onChange={changePassword}/>    
+                                <Form.Control placeholder="Contraseña" id="password" type="password" onChange={changePassword}/>    
                                 <Form.Text className=""><a href="/register">¿Aún no estás registrado?</a></Form.Text>
                                 <Button type="submit"variant="dark" className="margined-top" id="submit">Send</Button>
                             

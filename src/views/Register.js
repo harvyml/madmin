@@ -45,10 +45,10 @@ const App = () => {
                             <Form.Group>
                                 <Form.Control placeholder="Nombre" id="name" onChange={(e) => setName(e.target.value)}/>
                                 <Form.Control placeholder="Apellido" id="lastname" onChange={(e) => setLastname(e.target.value)}/>
-                                <Form.Control placeholder="Email" id="email" onChange={(e) => setUser(e.target.value)}/>
+                                <Form.Control placeholder="Email" id="email" type="email" onChange={(e) => setUser(e.target.value)}/>
                             </Form.Group>
-                                <Form.Control placeholder="Contraseña" id="password" onChange={(e) => setPassword(e.target.value)}/>
-                                <Form.Control placeholder="Repetir Contraseña" id="password" onChange={(e) => setPasswordValidation(e.target.value)}/>
+                                <Form.Control placeholder="Contraseña" id="password" type="password" onChange={(e) => setPassword(e.target.value)}/>
+                                <Form.Control placeholder="Repetir Contraseña" id="password" type="password" onChange={(e) => setPasswordValidation(e.target.value)}/>
                                 <Form.Text className="text-muted"><a href="/login">¿Ya estás registrado?</a></Form.Text>
                                 <Button type="submit"variant="dark" className="margined-top" id="submit">Send</Button>
                             
