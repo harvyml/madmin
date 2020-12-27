@@ -16,4 +16,9 @@ Integré MongoDB pensando en que se necesitan mas datos por pantalla que relacio
 ## Stack
 Use el stack MERN para construirla (Mongo, Express, React y Node)
 
+
+## Correrlo de manera local
+- hacer ```npm install```
+- crear un archivo .env y crear las variables de entorno ```DB``` con la dirección a una base de datos de mongo y ```SECRET_WORD_FOR_SESSION_HANDLING``` con cualquier valor
+
 Gracias!
